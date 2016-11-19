@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title><!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多个小球碰撞并且操控</title>
+	<style>
+		input,div{
+			font-family: "Arial";
+		}
+		input{
+			width: 60px;
+			height: 60px;
+			color: #fff;
+			outline: none;
+			border: none;
+			border-radius: 50%;
+			background: #a99dff;
+		}
+		.wrap{
+			position: relative;
+			width: 100%;
+			height: 580px;
+			margin: 10px auto;
+			background: #a99dff;
+		}
+		.ball{
+			position: absolute;
+			text-align: center;
+			line-height: 60px;
+			font-size: 22px;
+			color: #a99dff;
+			font-weight: bold;
+			border-radius: 50%;
+		}
+	</style>
+</head>
+<body>
+	<input type="button" value="go" id="btn">
+	<div class="wrap">
+		<div class="ball" id="ball">ball</div>
+		<div class="ball" id="ball01">ball</div>
+		<div class="ball" id="ball02">ball</div>
+		<div class="ball" id="ball03">ball</div>
+		<div class="ball" id="ball04">ball</div>
+	</div>
+	<script>
+		//解决计时器累加的效果
+
+		var oBtn=document.getElementById("btn");
+		var oDiv=document.getElementById("ball");
+		var oDiv1=document.getElementById("ball01");
+		var oDiv2=document.getElementById("ball02");
+		var oDiv3=document.getElementById("ball03");
+		var oDiv4=document.getElementById("ball04");
+		 function Ball(ele){//ele=element元素
+			this.ball=ele;
+			// console.log(this.ball);
+		}
+		Ball.prototype.init=function(_w,_h,bgcolor,xpos,ypos,speed,hflag,vflag){
+			this.ball.style.width=_w;
+			this.ball.style.height=_h;
+			this.ball.style.background=bgcolor;
+			this.ball.style.left=xpos;
+			this.ball.style.top=ypos;
+			this.speed=speed;
+			this.lefttag=hflag;
+			this.toptag=vflag;
+			this.time=null;
+		}
+		Ball.prototype.run=function(){
+
+				var _this=this;
+				 //为了防止this发生改变就这样重新声明，计时器和点击事件会导致this发改变
+				 clearInterval(_this.time);
+				this.time=setInterval(play,20);
+				// // //定义标志位
+				function play(){
+					var ballLeft=parseInt(_this.ball.style.left);
+					var ballTop=parseInt(_this.ball.style.top);
+					if(ballLeft+_this.ball.offsetWidth>=_this.ball.parentNode.offsetWidth){
+						_this.lefttag=-1;
+					}
+					if(ballTop+_this.ball.offsetHeight>=_this.ball.parentNode.offsetHeight){
+						_this.toptag=-1;
+					}
+					if(ballLeft<=0){
+						_this.lefttag=1;
+					}
+					if(ballTop<=0){
+						_this.toptag=1;
+					}
+					_this.ball.style.left=ballLeft+_this.speed*_this.lefttag+"px";
+					_this.ball.style.top=ballTop+_this.speed*_this.toptag+"px";
+				}
+				this.ball.onclick=function(){
+					if(_this.speed!=0){
+						_this.speed=0;
+					}
+					else if(_this.speed==0){
+						_this.speed=Math.floor(Math.random()*9+1);
+					}
+				}
+			}
+		var d0=new Ball(oDiv);
+		var d1=new Ball(oDiv1);
+		var d2=new Ball(oDiv2);
+		var d3=new Ball(oDiv3);
+		var d4=new Ball(oDiv4);
+		d0.init("80px","80px","#fff","20px","100px",2,1,-1);
+		d1.init("80px","80px","#666","60px","200px",3,-1,-1);
+		d2.init("80px","80px","#000","40px","80px",4,-1,1);
+		d3.init("80px","80px","#ccc","200px","100px",5,1,1);
+		d4.init("80px","80px","#ddd","500px","400px",4,1,1);
+		oBtn.onclick=function (){
+			d0.run();
+			d1.run();
+			d2.run();
+			d3.run();
+			d4.run();
+		}
+		var arr=[d0,d1,d2,d3,d4];
+		setInterval(testPz,5);
+		function testPz(){
+			for(var i=0;i<arr.length;i++){
+				for(var j=i+1;j<arr.length;j++){
+					checkPZ(arr[i],arr[j]);
+					checkPZ(arr[j],arr[i]);
+				}
+			}
+		}
+		function checkPZ(a,b){
+			var aleft=parseInt(a.ball.style.left),
+			      atop=parseInt(a.ball.style.top),
+			      bleft=parseInt(b.ball.style.left),
+			      btop=parseInt(b.ball.style.top),
+			      awidth=a.ball.offsetWidth,
+			      aheight=a.ball.offsetHeight,
+			      bwidth=b.ball.offsetWidth,
+			      bheight=b.ball.offsetHeight;
+			      if(bleft>aleft&&bleft<aleft+awidth&&btop>atop&&btop<atop+aheight){
+			      	console.log("peng");
+			      	if(a.lefttag==1&&b.lefttag==-1){
+			      		a.lefttag=-1;
+			      		b.lefttag=1;
+			      	}
+			      	if(a.lefttag==-1&&b.lefttag==-1){
+			      		b.lefttag=1;
+			      	}
+			      	if(a.lefttag==1&&b.lefttag==1){
+			      		a.lefttag=-1;
+			      	}
+			      	if(a.toptag==1&&b.toptag==1){
+			      		a.toptag=-1;
+			      	}
+			      	if(a.toptag==1&&b.toptag==-1){
+			      		a.toptag=-1;
+			      		b.toptag=1;
+			      	}
+			      	if(a.toptag==-1&&b.toptag==-1){
+			      		b.toptag=1;
+			      	}
+			      }
+			      if(aleft>bleft&&aleft<bleft+bwidth&&atop>btop&&atop<btop+bheight){
+			      	console.log("peng");
+			      	if(a.lefttag==1&&b.lefttag==1){
+			      		b.lefttag=-1;
+			      	}
+			      	if(a.lefttag==-1&&b.lefttag==1){
+			      		a.lefttag=1;
+			      		b.lefttag=-1;
+			      	}
+			      	if(a.lefttag==-1&&b.lefttag==-1){
+			      		a.lefttag=1;
+			      	}
+			      	if(a.toptag==1&&b.toptag==1){
+			      		b.toptag=-1;
+			      	}
+			      	if(a.toptag==-1&&b.toptag==1){
+			      		a.toptag=1;
+			      		b.toptag=-1;
+			      	}
+			      	if(a.toptag==-1&&b.toptag==-1){
+			      		a.toptag=1;
+			      	}
+			      }
+
+		}
+		// Ball.prototype.stop=function (){
+		// 	var _this=this;
+			
+		// }
+	</script>
+</body>
+</html></title>
+</head>
+<body>
+	
+</body>
+</html>

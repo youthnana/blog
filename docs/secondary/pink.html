@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial=1">
+		<title>css3自适应网站</title>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+		<style type="text/css">
+			body,div,p/* 展开的写法≈* */{
+				margin:0;
+				padding:0;
+				font-family:"Arial";
+			}
+			body{
+				overflow:hidden;/* 目的是消除滚动条 */
+			}
+			a{
+				text-decoration:none;
+			}
+			.rd,.btn{
+				position:fixed;/* 固定在页面的底部 */
+				bottom:0;
+				height:34px;
+				width:20%;
+				font-size:16px;
+				font-weight:bold;
+				color:#fff;
+				line-height:34px;
+				text-align:center;
+				background:#9876DE;
+			}
+			.rd-01,.btn-01{}/* 合并选择器，用“，”隔开，可以同时修饰多个 */
+			.rd-02,.btn-02{left:20%;}/* 这一块的目的是为了让下边的五个目录分散开 */
+			.rd-03,.btn-03{left:40%;}
+			.rd-04,.btn-04{left:60%;}
+			.rd-05,.btn-05{left:80%;}
+			.rd{
+				z-index:999;/* 层级关系，位于顶层 */
+				opacity:0;/*隐藏透明度单选按钮*/
+			}
+			.btn{
+				z-index:888;
+			}
+			.rd:hover + a{/* “+”号选择器代表紧随其后并且同级的元素 */
+				background:#5432D3;
+			}
+			.rd:checked + .btn{
+				background:#5432D3;
+			}
+			.rd:checked + .btn:after{
+				position:absolute;
+				left:50%;
+				bottom:100%;
+				margin-left:-20px;
+				content:"";
+				width:0;
+				height:0;
+				border:20px solid transparent;
+				border-bottom-color:#5432D3;
+			}
+			.page-wrap{
+				top:0;
+				text-align:center;
+				transition:top 1s ease;/*过渡效果，后方的三个值分别代表发生变化的属性名称、完成过渡所需要的时间以及运动的时间线 */
+			}
+			.page-wrap,.page{
+				position:absolute;
+				width:100%;
+				height:100%;
+			}
+			.page{
+				overflow:hidden;
+				perspective:100px;/* 摄影机的位置，在设置数值时如果想要用户永远看到就一定要小于当前数值否则可以大于 */
+			}
+			.page-01{top:0;}/* 这个部分是为了把页面撑起来，变成一个长图，因为经过绝对定位后，所有页面会叠加在一起，用这样的方式可以重新恢复页面高度 */
+			.page-02{top:100%;}
+			.page-03{top:200%;}
+			.page-04{top:300%;}
+			.page-05{top:400%;}
+			.page h2{
+				position:absolute;
+				left:10%;
+				top:50%;
+				width:80%;
+				margin-top:-70px;
+				font-size:54px;
+				text-shadow:1px 1px 1px rgba(151,24,64,0.2);/* 文字的阴影效果，第一个值代表的是左右偏移量，第二个是上下偏移量，第三个是虚实程度，最后是投影的颜色 */
+				color:#5432D3;
+			}
+			.page p{
+				position:absolute;
+				width:50%;
+				left:25%;
+				top:50%;
+				font-size:16px;
+				line-height:22px;
+				color:#7B6CF6;
+			}
+			.page:nth-child(odd) p{/* class名为page中所有的奇数页面中的p元素字体的颜色 */
+				color:#7B6CF6;
+			}
+			.page:nth-child(even) p{/* class名为page中所有的偶数页面中的p元素字体的颜色 */
+				color:#fff;
+			}
+			.text{
+				z-index:100;
+				position:absolute;
+				top:5%;
+				left:50%;
+				margin-left:-20px;
+				font-size:50px;
+				color:#9876DE;
+			}
+			.page:nth-child(odd) .text{
+				color:#fff;
+			}
+			.page:nth-child(even) .text{
+				color:#9876DE;
+			}
+			.top{
+				position: absolute;
+				top: 0px;
+				left: 50%;
+				width: 200px;
+				height: 200px;
+				margin-left: -100px;
+				transform: translateY(-50%) rotate(45deg);/* 2D变换，在Y轴方向向上移动50%，并且旋转45° */
+			}
+			.page:nth-child(odd) .top{
+				background:#9876DE;
+			}
+			.page:nth-child(even) .top{
+				background:#fff;
+			}
+			.page:nth-child(odd){
+				background:#fff;
+			}
+			.page:nth-child(even){
+				background:#9876DE;
+			}
+			.rd-02:checked ~ .page-wrap{/* “~”号选择器代表在其之后并且同级的元素 */
+				top:-100%;
+			}
+			.rd-03:checked ~ .page-wrap{
+				top:-200%;
+			}
+			.rd-04:checked ~ .page-wrap{
+				top:-300%;
+			}
+			.rd-05:checked ~ .page-wrap{
+				top:-400%;
+			}
+			.rd-01:checked ~ .page-wrap .page-01 h2,
+			.rd-02:checked ~ .page-wrap .page-02 h2,
+			.rd-03:checked ~ .page-wrap .page-03 h2,
+			.rd-04:checked ~ .page-wrap .page-04 h2,
+			.rd-05:checked ~ .page-wrap .page-05 h2{
+				animation:title2 2s ease forwards;/*动画效果，后方的四个值分别代表动画的名称、完成过渡所需要的时间、运动的时间线以及播放完成后停留在最后一帧 */
+			}
+			.rd-01:checked ~ .page-wrap .page-01 p,
+			.rd-02:checked ~ .page-wrap .page-02 p,
+			.rd-03:checked ~ .page-wrap .page-03 p,
+			.rd-04:checked ~ .page-wrap .page-04 p,
+			.rd-05:checked ~ .page-wrap .page-05 p{
+				animation:p2 1s ease-in-out forwards;
+			}
+			@keyframes title2{/* key关键帧所用的关键词，之后书写动画的名称 */
+				0%{/* 在刚开始的时候规定旋转720°，到结束的时候回到0° */
+					transform:rotate(720deg);
+				}
+				100%{
+					transform:rotate();
+				}
+			}
+			@keyframes p2{
+				0%{
+					transform:translateZ(260px);
+				}
+				100%{
+					transform:translateZ();
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<input type="radio" name="rdselt" checked="checked" class="rd rd-01">
+		<a href="#home" class="btn btn-01">Youth</a>
+
+		<input type="radio" name="rdselt" class="rd rd-02">
+		<a href="#about" class="btn btn-02">Belief</a>
+
+		<input type="radio" name="rdselt" class="rd rd-03">
+		<a href="#pic" class="btn btn-03">Soul</a>
+
+		<input type="radio" name="rdselt" class="rd rd-04">
+		<a href="#article" class="btn btn-04">Love</a>
+
+		<input type="radio" name="rdselt" class="rd rd-05">
+		<a href="#music" class="btn btn-05">Passion</a>
+
+
+		<div class="page-wrap">
+			<div class="page page-01">
+				<div class="text">
+					<i class="fa fa-home"></i>
+				</div>
+				<div class="top"></div>
+				<h2>Youth</h2>
+				<p>We did not change as we grew older, we just became more clearly ourselves.<br>长大的岁月里，我们从未变化，只是越来越清晰的成为自己</p>
+			</div>
+			<div class="page page-02">
+				<div class="text"><i class="fa fa-bars"></i></div>
+				<div class="top"></div>
+				<h2>Belief</h2>
+				<p>Live beautifully, dream passionately, love completely.<br>活要活得美好，梦要梦得热烈，
+	                        爱要爱得完整。</p>
+			</div>
+			<div class="page page-03">
+				<div class="text"><i class="fa fa-qq"></i></div>
+				<div class="top"></div>
+				<h2>Soul</h2>
+				<p>A good laugh and a long sleep are the best cures in the doctor’s book. <br>医书里说有两样东西, 是最好的灵丹妙药: 一个是开心的笑容,一个是睡个饱觉.</p>
+			</div>
+			<div class="page page-04">
+				<div class="text"><i class="fa fa-weibo"></i></div>
+				<div class="top"></div>
+				<h2>Love</h2>
+				<p>Life is too short to spend time regretting. If it's not the end, smile and keep on going.<br> 生命太短，没时间留给遗憾。若不是终点，请微笑一直向前</p>
+			</div>
+			<div class="page page-05">
+				<div class="text"><i class="fa fa-weixin"></i></div>
+				<div class="top"></div>
+				<h2>Passion</h2>
+				<p>Accept what was and what is, and you’ll have more positive energy to pursue what will be.<br> 接受过去和现在的模样，才会有能量去追寻自己的未来</p>
+			</div>
+		</div>
+	</body>
+</html>

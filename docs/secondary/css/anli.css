@@ -1,0 +1,36 @@
+@charset "utf-8";
+*{
+	margin: 0;
+	padding: 0;
+	border: none;
+	box-sizing: border-box;
+}
+.banner{
+	position: relative;
+	width: 1200px;
+	height: 400px;
+	margin: 100px auto;
+	-webkit-perspective: 1000;
+	   -moz-perspective: 1000;
+	        perspective: 1000;
+	-webkit-transform-style: preserve-3d;
+	   -moz-transform-style: preserve-3d;
+	        transform-style: preserve-3d;
+}
+.banner img{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 260px;
+	height: 360px;
+	transition: .3s;
+}
+.banner img.left{
+	transform: rotateY(45deg) translateZ(-100px);
+}
+.banner img.middle{
+	transform: translateZ(100px);
+}
+.banner img.right{
+	transform: rotateY(-45deg) translateZ(-100px);
+}
