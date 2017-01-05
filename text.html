@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>text</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="css/src/dataTable.css"> -->
+	<script type="text/javascript" src="js/jquery.3.1.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<style>
+		.dataTable .table>tbody>tr>td.quitBorder {
+			width: 100%;
+			padding: 0; 
+		}
+		.dataTable .table>tbody>tr>td.quitBorder>.table>tbody > tr > td { 
+			/* padding: 8px 0; */
+			border-left: 0; 
+		}
+		.dataTable .table>tbody>tr>td.quitBorder>.table{ 
+			width: 100%;
+		}
+		.dataTable .table{
+			margin-bottom: 0;
+		}
+		.dataTable .table > tbody > tr > td:nth-child(1) {
+			width: 200px;
+		}
+		.dataTable .table > tbody > tr > td:nth-child(2) {
+			width: 200px;
+		}
+		.dataTable .table > tbody > tr > td:nth-child(3) {
+			width: 30%;
+		}
+		.dataTable .table > tbody > tr > td:nth-child(4) {
+			width: 20%;
+		}
+		.dataTable .table > tbody > tr > td:nth-child(5) {
+			width: 20%;
+		}
+	</style>
+</head>
+<body>
+	<div class="dataTable">
+		<table class="table table-bordered" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
+			<tr>
+				<td colspan="1">1</td>
+				<td colspan="1">地板</td>
+				<td colspan="1">国产</td>
+				<td colspan="1">实木复合地板，人字拼，国产</td>
+				<td colspan="1">㎡</td>
+				<td colspan="1">2,500.00  </td>
+			</tr>
+			<tr>
+				<td colspan="6" class="quitBorder">
+					<table class="table table-bordered" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse;border-width:0px; border-style:hidden;">
+							<tr>
+								<td></td>
+								<td>入户电子门</td>
+								<td>诺沃芬或霍曼</td>
+								<td>子母门 1200*2300</td>
+								<td>樘</td>
+								<td>2,500.00 </td>
+							</tr>
+							<tr>
+								<td>内层table22</td>
+								<td>内层table22</td>
+								<td>内层table22</td>
+								<td>内层table</td>
+								<td>内层table</td>
+								<td>内层table</td>
+							</tr>
+					</table>
+				</td>
+			</tr>
+			
+		</table>
+	</div>
+</body>
+</html>
